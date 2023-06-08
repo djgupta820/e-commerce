@@ -3,7 +3,9 @@ const ejsMate = require('ejs-mate')
 const path = require('path')
 const methodOverride = require("method-override")
 
+// using all routers
 const productRoutes = require('./routes/productRoutes')
+const reviewRoutes = require('./routes/reviewRouter')
 
 const app = express()
 app.engine('ejs', ejsMate)
@@ -15,6 +17,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 // using product routes
 app.use(productRoutes)
+app.use(reviewRoutes)
 
 app.get('/', (req,res)=>{
     res.send("<h1> E-Commerce Website </h1>")
