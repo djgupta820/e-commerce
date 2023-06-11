@@ -20,7 +20,7 @@ app.use(productRoutes)
 app.use(reviewRoutes)
 
 app.get('/', (req,res)=>{
-    res.send("<h1> E-Commerce Website </h1>")
+    res.render('index')
 })
 
 app.listen('3000', (req,res)=>{
