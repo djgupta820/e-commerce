@@ -4,8 +4,8 @@ const Product = require('../models/Product')
 
 // get all products
 router.get('/products', async (req,res)=>{
-    const products = await Product.find({}) 
-    res.render('products/index', {products})
+    const products = await Product.find({})
+    res.render('products/index', {products, message: req.flash('message')})
 })
 
 // get form to create new product
@@ -16,8 +16,14 @@ router.get('/products/new', (req,res)=>{
 // create new product
 router.post('/products/new', async (req,res)=>{
     const {name, img, price, desc} = req.body
-    await Product.create({name, img, price, desc})
-    res.redirect('/products')
+    try{
+        await Product.create({name, img, price, desc})
+        req.flash('success', 'Product added successfully! ')
+        res.redirect('/products')
+    }catch{
+        req.flash('error', 'Product added Unsuccessfully! ')
+        res.redirect('/products')
+    }
 })
 
 // show product
@@ -39,13 +45,15 @@ router.patch('/products/:productId', async (req,res)=>{
     const {productId} = req.params
     const {name, img, price, desc} = req.body
     await Product.findByIdAndUpdate(productId, {name, img, price, desc})
-    res.redirect('/products')
+    req.flash('success', 'Product updated successfully!')
+    res.redirect(`/products/${productId}`)
 })
 
 // delete product
 router.delete('/products/:productId', async (req,res)=>{
     const {productId} = req.params
     await Product.findByIdAndDelete(productId)
+    req.flash('success', 'Product deleted successfully!')
     res.redirect('/products')
 })
 
