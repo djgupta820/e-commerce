@@ -12,6 +12,7 @@ const User = require('./models/User')
 const productRoutes = require('./routes/productRoutes')
 const reviewRoutes = require('./routes/reviewRouter')
 const authRoutes = require('./routes/authRoutes')
+const cartRoutes = require('./routes/cartRoutes')
 const app = express()
 
 const sessionConfig = {
@@ -40,7 +41,7 @@ passport.deserializeUser(User.deserializeUser())
 app.use((req,res,next)=>{
     res.locals.success = req.flash('success')
     res.locals.error = req.flash('error')
-    res.locals.newUser = req.user
+    res.locals.currentUser = req.user
     next()
 })
 
@@ -48,9 +49,10 @@ app.use((req,res,next)=>{
 app.use(productRoutes)
 app.use(reviewRoutes)
 app.use(authRoutes)
+app.use(cartRoutes)
 
 app.get('/', (req,res)=>{
-    res.render('index')
+    res.render('homepage')
 })
 
 app.listen('3000', (req,res)=>{

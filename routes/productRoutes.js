@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Product = require('../models/Product')
+const {isLoggedIn} = require('../middleware')
 
 // get all products
 router.get('/products', async (req,res)=>{
@@ -9,7 +10,7 @@ router.get('/products', async (req,res)=>{
 })
 
 // get form to create new product
-router.get('/products/new', (req,res)=>{
+router.get('/products/new', isLoggedIn, (req,res)=>{
     res.render('products/new')
 })
 
@@ -34,14 +35,14 @@ router.get('/products/:productId', async (req,res)=>{
 })
 
 // render edit/update product
-router.get('/products/:productId/edit', async (req,res)=>{
+router.get('/products/:productId/edit', isLoggedIn, async (req,res)=>{
     const {productId} = req.params
     const product = await Product.findById(productId)
     res.render('products/edit', {product})
 })
 
 // update the product
-router.patch('/products/:productId', async (req,res)=>{
+router.patch('/products/:productId', isLoggedIn, async (req,res)=>{
     const {productId} = req.params
     const {name, img, price, desc} = req.body
     await Product.findByIdAndUpdate(productId, {name, img, price, desc})
@@ -50,7 +51,7 @@ router.patch('/products/:productId', async (req,res)=>{
 })
 
 // delete product
-router.delete('/products/:productId', async (req,res)=>{
+router.delete('/products/:productId', isLoggedIn, async (req,res)=>{
     const {productId} = req.params
     await Product.findByIdAndDelete(productId)
     req.flash('success', 'Product deleted successfully!')

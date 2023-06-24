@@ -16,6 +16,9 @@
                         <h5 class="card-title">$<%=product.price%>
                         </h5>
                         <a href="/products/<%=product._id%>/edit" class="btn btn-sm btn-secondary">Edit</a>
+                        <form action="/products/<%=product._id%>/cart" method="post" class="d-inline">
+                            <button class="btn btn-sm btn-warning">add to cart</button>
+                        </form>
                         <form action="/products/<%=product._id%>?_method=DELETE" method="post" class="d-inline">
                             <button class="btn btn-sm btn-danger">Delete</button>
                         </form>
@@ -28,6 +31,21 @@
         <div class="col-lg-6">
             <h1 class="mx-2">Add a Review</h1>
             <div class="m-1">
+                
+                <!-- <fieldset class="starability-fade">
+                    <legend>First rating:</legend>
+                    <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="0" checked aria-label="No rating." />
+                    <input type="radio" id="second-rate1" name="rating" value="1" />
+                    <label for="second-rate1" title="Terrible">1 star</label>
+                    <input type="radio" id="second-rate2" name="rating" value="2" />
+                    <label for="second-rate2" title="Not good">2 stars</label>
+                    <input type="radio" id="second-rate3" name="rating" value="3" />
+                    <label for="second-rate3" title="Average">3 stars</label>
+                    <input type="radio" id="second-rate4" name="rating" value="4" />
+                    <label for="second-rate4" title="Very good">4 stars</label>
+                    <input type="radio" id="second-rate5" name="rating" value="5" />
+                    <label for="second-rate5" title="Amazing">5 stars</label>
+                  </fieldset> -->
                 <form action="/products/<%= product._id %>/review" method="post">
                     <div class="mb-3">
                         <label for="rating" class="form-label">Rating</label>
