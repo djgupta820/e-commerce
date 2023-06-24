@@ -32,6 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(session(sessionConfig))
 app.use(flash())
 app.use(passport.authenticate('session'))
+
 passport.use(new LocalStrategy(User.authenticate()))
 passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
@@ -39,7 +40,7 @@ passport.deserializeUser(User.deserializeUser())
 app.use((req,res,next)=>{
     res.locals.success = req.flash('success')
     res.locals.error = req.flash('error')
-    req.locals.newUser = req.user
+    res.locals.newUser = req.user
     next()
 })
 
